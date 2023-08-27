@@ -11,7 +11,7 @@ $mail->CharSet = 'utf-8';
 // $mail->SMTPDebug = 3;                               // Enable verbose debug output
 
 $mail->isSMTP();                                      // Set mailer to use SMTP
-$mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+$mail->Host = 'smtp.rambler.ru';  // Specify main and backup SMTP servers
 $mail->SMTPAuth = true;                               // Enable SMTP authentication
 $mail->Username = 'korolenko_misha@rambler.ru';                 // Наш логин
 $mail->Password = 'Kwertyuis228';                           // Наш пароль от ящика
@@ -35,10 +35,18 @@ $mail->Body    = '
 	Номер телефона: ' . $phone . '<br>
 	E-mail: ' . $email . '';
 
-if(!$mail->send()) {
-    return false;
-} else {
-    return true;
+// if(!$mail->send()) {
+//     return false;
+// } else {
+//     return true;
+// }
+try {
+	if (!$mail->send()) {
+		throw new Exception('Ошибка отправки письма: ' . $mail->ErrorInfo);
+	}
+	echo 'Письмо успешно отправлено';
+} catch (Exception $e) {
+	echo 'Ошибка: ' . $e->getMessage();
 }
 
 ?>
